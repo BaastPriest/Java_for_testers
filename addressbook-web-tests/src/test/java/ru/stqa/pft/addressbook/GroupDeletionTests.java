@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook;
 
 import org.testng.annotations.Test;
 
@@ -6,10 +6,10 @@ public class GroupDeletionTests extends TestDase {
 
     @Test
     public void testGroupDeletion () { //переименовала метод с маленькой буквы
-        app.gotoGroupPage();
-        app.selectGroup();
-        app.deleteSelectedGroups();
-        app.returnToGroupPage();
+        gotoGroupPage();
+        selectGroup();
+        deleteSelectedGroups();
+        returnToGroupPage();
     }
 
 }
