@@ -3,7 +3,7 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-public class GroupCreationTests extends TestBase  {
+public class GroupCreationTests extends TestDase  {
 
   @Test
   public void testGroupCreation() {
@@ -13,4 +13,5 @@ public class GroupCreationTests extends TestBase  {
     app.submitGroupCreation();
     app.returnToGroupPage();
   }
+
 }
