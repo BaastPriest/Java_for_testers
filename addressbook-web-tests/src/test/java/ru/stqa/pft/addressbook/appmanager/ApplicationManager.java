@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ApplicationManager {
 
-  private final GroupHelper groupHelper = new GroupHelper();
+  public final GroupHelper groupHelper = new GroupHelper();
 
   public static boolean isAlertPresent(FirefoxDriver wd) {
     try {
