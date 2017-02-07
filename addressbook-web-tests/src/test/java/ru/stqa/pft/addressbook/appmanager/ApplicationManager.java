@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by user on 03.02.2017.
  */
-public class ApplicationManager extends ContactHelper {
+public class ApplicationManager {
 
   public  GroupHelper groupHelper = new GroupHelper();
   public  ContactHelper contactHelper = new ContactHelper();
