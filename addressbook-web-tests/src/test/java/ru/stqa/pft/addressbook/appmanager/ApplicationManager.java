@@ -24,31 +24,29 @@ public class ApplicationManager {
   }
 
   public void init() {
-    groupHelper.wd = new FirefoxDriver();
-    contactHelper.wd = groupHelper.wd;
     groupHelper.wd = wd;
     contactHelper.wd = wd;
     groupHelper.wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-    groupHelper.wd.get("http://localhost:8080/addressbook/group.php");
+    wd.get("http://localhost:8080/addressbook/group.php");
     login("admin", "secret");
   }
 
   private void login(String username, String password) {
-    groupHelper.wd.findElement(By.name("user")).click();
-    groupHelper.wd.findElement(By.name("user")).clear();
-    groupHelper.wd.findElement(By.name("user")).sendKeys(username);
-    groupHelper.wd.findElement(By.name("pass")).click();
-    groupHelper.wd.findElement(By.name("pass")).clear();
-    groupHelper.wd.findElement(By.name("pass")).sendKeys(password);
-    groupHelper.wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+    wd.findElement(By.name("user")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys(username);
+    wd.findElement(By.name("pass")).click();
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys(password);
+    wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
   }
 
   public void gotoGroupPage() {
-    groupHelper.wd.findElement(By.linkText("groups")).click();
+    wd.findElement(By.linkText("groups")).click();
   }
 
   public void stop() {
-    groupHelper.wd.quit();
+    wd.quit();
   }
 
 }
