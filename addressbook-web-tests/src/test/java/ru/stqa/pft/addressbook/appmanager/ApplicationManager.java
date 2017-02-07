@@ -8,11 +8,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
+  WebDriver wd = new FirefoxDriver();
 
+  private NavigationHelper navigationHelper;
   public  GroupHelper groupHelper = new GroupHelper();
   public  ContactHelper contactHelper = new ContactHelper();
-
-  WebDriver wd = new FirefoxDriver();
 
   public static boolean isAlertPresent(FirefoxDriver wd) {
     try {
@@ -28,10 +28,11 @@ public class ApplicationManager {
     contactHelper.wd = wd;
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost:8080/addressbook/group.php");
+    navigationHelper = new NavigationHelper(wd);
     login("admin", "secret");
   }
 
-  private void login(String username, String password) {
+  public void login(String username, String password) {
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
     wd.findElement(By.name("user")).sendKeys(username);
@@ -41,12 +42,11 @@ public class ApplicationManager {
     wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
   }
 
-  public void gotoGroupPage() {
-    wd.findElement(By.linkText("groups")).click();
-  }
-
   public void stop() {
     wd.quit();
   }
 
+  public NavigationHelper getNavigationHelper() {
+    return navigationHelper;
+  }
 }
