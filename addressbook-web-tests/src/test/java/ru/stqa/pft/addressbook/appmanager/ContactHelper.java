@@ -1,14 +1,12 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-/**
- * Created by user on 07.02.2017.
- */
 public class ContactHelper {
-  FirefoxDriver wd;
+  WebDriver wd;
 
   public void returnToContactPage() {
     wd.findElement(By.linkText("home page")).click();

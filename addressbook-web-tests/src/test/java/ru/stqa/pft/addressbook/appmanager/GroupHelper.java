@@ -1,14 +1,13 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-/**
- * Created by user on 03.02.2017.
- */
 public class GroupHelper {
-  FirefoxDriver wd;
+  WebDriver wd;
+
 
   public void returnToGroupPage() {
     wd.findElement(By.linkText("group page")).click();

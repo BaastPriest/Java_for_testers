@@ -2,17 +2,17 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by user on 03.02.2017.
- */
 public class ApplicationManager {
 
   public  GroupHelper groupHelper = new GroupHelper();
   public  ContactHelper contactHelper = new ContactHelper();
+
+  WebDriver wd = new FirefoxDriver();
 
   public static boolean isAlertPresent(FirefoxDriver wd) {
     try {
@@ -26,6 +26,8 @@ public class ApplicationManager {
   public void init() {
     groupHelper.wd = new FirefoxDriver();
     contactHelper.wd = groupHelper.wd;
+    groupHelper.wd = wd;
+    contactHelper.wd = wd;
     groupHelper.wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     groupHelper.wd.get("http://localhost:8080/addressbook/group.php");
     login("admin", "secret");
