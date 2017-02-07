@@ -25,6 +25,7 @@ public class ApplicationManager {
 
   public void init() {
     groupHelper.wd = new FirefoxDriver();
+    contactHelper.wd = groupHelper.wd;
     groupHelper.wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     groupHelper.wd.get("http://localhost:8080/addressbook/group.php");
     login("admin", "secret");
