@@ -9,9 +9,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by user on 03.02.2017.
  */
-public class ApplicationManager {
+public class ApplicationManager extends ContactHelper {
 
-  public final GroupHelper groupHelper = new GroupHelper();
+  public  GroupHelper groupHelper = new GroupHelper();
+  public  ContactHelper contactHelper = new ContactHelper();
 
   public static boolean isAlertPresent(FirefoxDriver wd) {
     try {
