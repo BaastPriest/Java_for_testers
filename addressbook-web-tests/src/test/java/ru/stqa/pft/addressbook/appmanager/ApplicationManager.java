@@ -14,8 +14,6 @@ public class ApplicationManager {
   private ContactHelper contactHelper;
 
   public void init() {
-    groupHelper.wd = wd;
-    contactHelper.wd = wd;
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost:8080/addressbook/group.php");
     navigationHelper = new NavigationHelper(wd);
