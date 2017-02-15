@@ -6,8 +6,11 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() {
-    app.getContactHelper().initContactCreation();
-
+    app.getContactHelper().returnToContactPage();
+    app.getContactHelper().initContactModification();
+    app.getContactHelper().deleteContact();
+    /* Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
+    wd.switchTo().alert().accept(); */
   }
 }
 
