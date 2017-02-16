@@ -17,8 +17,10 @@ public class HeplerBase {
 
   protected void type(By locator, String text) {
     click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
+    if (text != null) { //сокращенная форма конструктора if
+      wd.findElement(locator).clear();
+      wd.findElement(locator).sendKeys(text);
+    }
   }
 
   public boolean isAlertPresent() {
