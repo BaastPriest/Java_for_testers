@@ -18,8 +18,11 @@ public class HeplerBase {
   protected void type(By locator, String text) {
     click(locator);
     if (text != null) { //сокращенная форма конструктора if
-      wd.findElement(locator).clear();
-      wd.findElement(locator).sendKeys(text);
+      String existionText = wd.findElement(locator).getAttribute("value");
+      if (! text.equals(existionText)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
     }
   }
 
