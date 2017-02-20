@@ -10,6 +10,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
       app.getContactHelper().initContactCreation();
       app.getContactHelper().fillContactForm(new ContactData("myname", "mylastname", "88007006050", "alena@yandex.com", "test1"), true);
       app.getContactHelper().submitContactCreation();
-      app.getContactHelper().returnToContactPage();
+      app.getNavigationHelper().gotoHomePage();
     }
   }
