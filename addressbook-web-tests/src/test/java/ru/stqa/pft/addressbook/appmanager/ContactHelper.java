@@ -53,4 +53,8 @@ public class ContactHelper extends HeplerBase {
     public boolean isThereAContact() {
         return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).size();
+    }
 }
