@@ -32,7 +32,8 @@ public class ContactHelper extends HeplerBase {
         click(By.linkText("add new"));
     }
 
-    public void initContactModification() {
+    public void initContactModification(int index) {
+        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
         click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
