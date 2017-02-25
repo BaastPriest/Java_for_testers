@@ -16,9 +16,12 @@ public class ContactDeletionTests extends TestBase {
         }
         app.getNavigationHelper().gotoHomePage();
         List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().initContactModification(before.size() - 1);
+        app.getContactHelper().initContactModification(before.size());
         app.getContactHelper().deleteContact();
+        app.getNavigationHelper().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
+
+
         Assert.assertEquals(after.size(), before.size() - 1);
     /* Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
     wd.switchTo().alert().accept(); */

@@ -37,8 +37,8 @@ public class ContactHelper extends HeplerBase {
     }
 
     public void initContactModification(int index) {
-        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr["+index+"]/td[8]/a/img"));
+        click(By.xpath("//table[@id='maintable']/tbody/tr["+index+"]/td[8]/a/img"));
     }
 
     public void deleteContact() {
