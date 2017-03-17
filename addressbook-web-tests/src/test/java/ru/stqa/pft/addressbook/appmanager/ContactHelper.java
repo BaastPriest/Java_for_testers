@@ -37,8 +37,8 @@ public class ContactHelper extends HeplerBase {
     }
 
     public void initContactModification(int index) {
-        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr["+index+"]/td[8]/a/img"));
-        click(By.xpath("//table[@id='maintable']/tbody/tr["+index+"]/td[8]/a/img"));
+        wd.findElements(By.xpath("//table[@id='maintable']//["+index+"]//a/img"));  // Изменила путь, так как выдавало ошибку о недоступности пути. Сократила.
+        click(By.xpath("//table[@id='maintable']//["+index+"]//a/img"));
     }
 
     public void deleteContact() {
@@ -69,7 +69,8 @@ public class ContactHelper extends HeplerBase {
         for (WebElement element : elements) {
             String lastName = element.getText();
             String firstName = element.getText();
-            ContactData contact = new ContactData(firstName, lastName, null, null, null);
+            String id = element.findElement(By.tagName("input")).getAttribute("value"); //поиск одного элемента внутри другого
+            ContactData contact = new ContactData(id, firstName, lastName, null, null, null);
         contacts.add(contact);
         }
         return contacts;
