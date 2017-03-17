@@ -26,7 +26,8 @@ public class ContactDeletionTests extends TestBase {
     /* Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
     wd.switchTo().alert().accept(); */
 
-
+    before.remove(before.size() - 1);
+    Assert.assertEquals(before, after);
     }
 }
 
