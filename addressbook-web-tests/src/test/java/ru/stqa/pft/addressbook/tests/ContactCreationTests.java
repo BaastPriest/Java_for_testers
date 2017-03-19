@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test //Измениала название метода. Название метода и класса не должны совпадать. Метод с маленькой буквы
+    @Test(enabled = false)
     public void testContactCreation() {
       app.getNavigationHelper().gotoHomePage();
       List<ContactData> before = app.getContactHelper().getContactList();
