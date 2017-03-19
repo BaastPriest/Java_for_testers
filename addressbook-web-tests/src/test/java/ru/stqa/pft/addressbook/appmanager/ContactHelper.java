@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +56,14 @@ public class ContactHelper extends HeplerBase {
         submitContactCreation();
     }
 
+    public void modifyContact(int index, ContactData contact) {
+        gotoHomePage();
+        initContactModification(index);
+        fillContactForm(contact, false);
+        submitContactModification();
+        gotoHomePage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
@@ -81,4 +88,12 @@ public class ContactHelper extends HeplerBase {
         }
         return contacts;
     }
+
+    public void gotoHomePage() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        click(By.linkText("home"));
+    } //Перенесла, так как в NavigationHelper из этой части его не видно
+
 }
