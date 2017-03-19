@@ -1,7 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-    private final int id;
+    private int id;
     private final String firstname;
     private final String lastname;
     private final String mobile;
@@ -28,6 +28,14 @@ public class ContactData {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getFirstname() {
