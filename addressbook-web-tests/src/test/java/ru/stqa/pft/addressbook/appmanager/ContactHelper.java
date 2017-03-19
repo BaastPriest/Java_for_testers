@@ -74,10 +74,10 @@ public class ContactHelper extends HeplerBase {
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
 
-            int id = Integer.parseInt (element.findElement(By.xpath("//td[@class = 'center']")).getAttribute("value"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
             ContactData contact = new ContactData(id, firstName, lastName, null, null, null);
-        contacts.add(contact);
+            contacts.add(contact);
         }
         return contacts;
     }
