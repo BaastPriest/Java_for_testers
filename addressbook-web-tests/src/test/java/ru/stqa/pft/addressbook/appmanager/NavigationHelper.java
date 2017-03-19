@@ -19,7 +19,7 @@ public class NavigationHelper extends HeplerBase {
         click(By.linkText("groups"));
     }
 
-    public void gotoHomePage() {
+    public void homePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
