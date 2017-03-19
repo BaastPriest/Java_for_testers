@@ -7,7 +7,6 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.openqa.selenium.By.*;
 
 public class ContactHelper extends HeplerBase {
@@ -89,8 +88,7 @@ public class ContactHelper extends HeplerBase {
 
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
-            ContactData contact = new ContactData(id, firstName, lastName, null, null, null);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
         }
         return contacts;
     }
