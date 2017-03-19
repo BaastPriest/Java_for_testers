@@ -65,11 +65,15 @@ public class ContactHelper extends HeplerBase {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("input[type='checkbox']"));
+        List<WebElement> elements = wd.findElements(By.tagName("tr"));
         for (WebElement element : elements) {
-            String lastName = element.getText();
-            String firstName = element.getText();
-            String id = element.findElement(By.tagName("input")).getAttribute("value"); //поиск одного элемента внутри другого
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            //String lastName = element.findElements(By.name("td"));
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+
+            int id = Integer.parseInt (element.findElement(By.tagName("tr")).getAttribute("value"));
+            //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
             ContactData contact = new ContactData(id, firstName, lastName, null, null, null);
         contacts.add(contact);
         }
