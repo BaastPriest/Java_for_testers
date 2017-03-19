@@ -6,7 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import static org.openqa.selenium.By.*;
 
 public class ContactHelper extends HeplerBase {
@@ -43,6 +46,9 @@ public class ContactHelper extends HeplerBase {
 
     public void deleteContact() {
         click(xpath("//div[@id='content']/form[2]/input[2]"));
+    }
+
+    public void delete(ContactData contact) {
     }
 
     public void submitContactModification() {
@@ -93,11 +99,28 @@ public class ContactHelper extends HeplerBase {
         return contacts;
     }
 
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.xpath("//tr[@name = 'entry']"));
+        for (WebElement element : elements) {
+            List<WebElement> cells = element.findElements(tagName("td"));
+            //String lastName = element.findElements(By.name("td"));
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
+            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+        }
+        return contacts;
+    }
+
     public void gotoHomePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
         click(By.linkText("home"));
     } //Перенесла, так как в NavigationHelper из этой части его не видно
+
 
 }
