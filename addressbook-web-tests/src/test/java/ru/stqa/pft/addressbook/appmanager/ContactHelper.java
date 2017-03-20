@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,9 +38,8 @@ public class ContactHelper extends HeplerBase {
         click(linkText("add new"));
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(xpath("//table[@id='maintable']//["+index+"]//a/img"));  // Изменила путь, так как выдавало ошибку о недоступности пути. Сократила.
-        click(xpath("//table[@id='maintable']//["+index+"]//a/img"));
+    public void initContactModificationById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void deleteContact() {
@@ -49,6 +47,9 @@ public class ContactHelper extends HeplerBase {
     }
 
     public void delete(ContactData contact) {
+        initContactModificationById(contact.getId());
+        deleteContact();
+        gotoHomePage();
     }
 
     public void submitContactModification() {
@@ -61,17 +62,11 @@ public class ContactHelper extends HeplerBase {
         submitContactCreation();
     }
 
-    public void modify(int index, ContactData contact) {
+    public void modify(ContactData contact) {
         gotoHomePage();
-        initContactModification(index);
+        initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
-        gotoHomePage();
-    }
-
-    public void delete(int index) {
-        initContactModification(index);
-        deleteContact();
         gotoHomePage();
     }
 
@@ -81,22 +76,6 @@ public class ContactHelper extends HeplerBase {
 
     public int getContactCount() {
         return wd.findElements(name("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).size();
-    }
-
-    public List<ContactData> List() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.xpath("//tr[@name = 'entry']"));
-        for (WebElement element : elements) {
-            List<WebElement> cells = element.findElements(tagName("td"));
-            //String lastName = element.findElements(By.name("td"));
-            String lastName = cells.get(1).getText();
-            String firstName = cells.get(2).getText();
-
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
-            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
-        }
-        return contacts;
     }
 
     public Set<ContactData> all() {
@@ -121,6 +100,5 @@ public class ContactHelper extends HeplerBase {
         }
         click(By.linkText("home"));
     } //Перенесла, так как в NavigationHelper из этой части его не видно
-
 
 }
