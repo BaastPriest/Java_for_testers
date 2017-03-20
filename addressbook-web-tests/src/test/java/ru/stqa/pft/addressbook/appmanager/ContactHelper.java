@@ -5,10 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-import java.util.HashSet;
+import ru.stqa.pft.addressbook.model.Contacts;
 import java.util.List;
-import java.util.Set;
-
 import static org.openqa.selenium.By.*;
 
 public class ContactHelper extends HeplerBase {
@@ -78,8 +76,8 @@ public class ContactHelper extends HeplerBase {
         return wd.findElements(name("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).size();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<ContactData>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name = 'entry']"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(tagName("td"));
