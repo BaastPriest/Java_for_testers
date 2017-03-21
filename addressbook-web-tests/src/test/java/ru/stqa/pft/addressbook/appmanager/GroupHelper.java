@@ -37,7 +37,7 @@ public class GroupHelper extends HeplerBase {
         click(By.name("delete"));
     }
 
-    public void selectGroupById (int id) {
+    public void selectGroupById (int id) {  // как и метод String.format
         wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
