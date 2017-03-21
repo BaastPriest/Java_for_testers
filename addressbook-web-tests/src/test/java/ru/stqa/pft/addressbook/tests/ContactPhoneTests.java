@@ -18,7 +18,7 @@ public class ContactPhoneTests extends TestBase {
         if(app.contact().all().size() ==0) {
             app.contact().create(new ContactData().withFirstname("myname").withLastname("mylastname").withMobile("88007006050").withEmail("alena@yandex.com").withGroup("test1"));
         }
-    } //надо добавить еще два номера
+    }
 
     //МЕТОД ОБРАТНЫХ ПРОВЕРОК
     @Test //(enabled = false)
@@ -47,6 +47,6 @@ public class ContactPhoneTests extends TestBase {
     }
 
     public static String cleaned(String phone) {
-        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+        return phone.replaceAll("\\s", "").replaceAll("[-()]", ""); //регулярные выражения (пробельный символ)
     }
 }
