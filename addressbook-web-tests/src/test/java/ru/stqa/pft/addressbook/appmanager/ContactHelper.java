@@ -36,12 +36,9 @@ public class ContactHelper extends HeplerBase {
         click(linkText("add new"));
     }
 
-    public void initContactModificationById(int id) {
-        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
-    }
 
     public void deleteContact() {
-        click(xpath("//div[@id='content']/form[2]/input[2]"));
+        click(xpath("//*[@value='Delete']"));
     }
 
     public void delete(ContactData contact) {
@@ -75,8 +72,8 @@ public class ContactHelper extends HeplerBase {
         return isElementPresent(xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
-    public int getContactCount() {
-        return wd.findElements(name("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).size();
+    public int count() {
+        return wd.findElements(By.xpath("//tr[@name = 'entry']//input")).size();
     }
 
     private Contacts contactCache = null;
@@ -105,4 +102,28 @@ public class ContactHelper extends HeplerBase {
         click(By.linkText("home"));
     } //Перенесла, так как в NavigationHelper из этой части его не видно
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("firstname")).getAttribute("value");
+        String work = wd.findElement(By.name("firstname")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
+                withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+    }
+
+    private void initContactModificationById(int id) { //выбираю кнопку редактирования(через нее удаление), что бы избежать подтверждающего удаление диалоговое окно
+        //1 путь. реализация метода последовательных приближений
+        //wd.findElement(By.xpath("//tr[@name = 'entry']//input[id='" + id + "']")).click();
+        WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id))); //поиск чекбокса
+        WebElement row = checkbox.findElement(By.xpath("./../..")); //переход к родительскому элементу
+        List<WebElement> cells = row.findElements(By.tagName("td")); //выбор ячейки с карандашиком
+        cells.get(7).findElement(By.tagName("a")).click(); //клик на карандашик
+        //2 путь.
+        //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();//в xpath номера начинаются с 1, а не с 0
+        //wd.findElement(By.xpath(String.format("//tr[.//input[@value=%s']]/td[8]/a", id))).click(); //подзапросы - начинаются с точки. поиск по ограничениям
+        //wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();// поиск по идентификатору в нужной ячейке
+         }
 }
