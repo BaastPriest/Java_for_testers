@@ -4,6 +4,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class ContactPhoneTests extends TestBase {
 
     @BeforeMethod
@@ -14,10 +20,33 @@ public class ContactPhoneTests extends TestBase {
         }
     } //надо добавить еще два номера
 
+    //МЕТОД ОБРАТНЫХ ПРОВЕРОК
     @Test //(enabled = false)
     public void testContactPhones() {
         app.goTo().homePage();
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+
+        assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
+       /* assertThat(contact.getAllPhones(), equalTo(cleaned(contactInfoFromEditForm.getAllPhones())));
+        assertThat(contact.getMobilePhone(), equalTo(cleaned(contactInfoFromEditForm.getMobilePhone())));
+        assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getGetHomePhone()))); проверка тел по отдельности*/
+    }
+
+    private <T> String mergePhones(ContactData contact) {
+       return Arrays.asList(contact.getGetHomePhone(),contact.getMobile(), contact.getWorkPhone())
+               .stream().filter((s) -> ! s.equals(""))
+               .map(ContactPhoneTests::cleaned)
+               .collect(Collectors.joining("\n"));
+
+             /* пример реализации в старой версии
+             String result = "";
+             if (contact.getGetHomePhone() != null) {
+             result = result + contact.getGetHomePhone();
+             } + в качестве разделителя перевод строки */
+    }
+
+    public static String cleaned(String phone) {
+        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
 }

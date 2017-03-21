@@ -6,7 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import static org.openqa.selenium.By.*;
 
 public class ContactHelper extends HeplerBase {
@@ -83,14 +87,16 @@ public class ContactHelper extends HeplerBase {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
-        List<WebElement> elements = wd.findElements(By.xpath("//tr[@name = 'entry']"));
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(tagName("td"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
-
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+            String allPhones = cells.get(5).getText();
+            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
+                .withAllPhones(allPhones));
         }
         return new Contacts(contactCache);
     }

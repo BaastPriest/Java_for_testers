@@ -11,6 +11,18 @@ public class ContactData {
     private String workPhone;
     private String mobilePhone;
 
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    private String allPhones;
+
+
 
     public int getId() {
         return id;
