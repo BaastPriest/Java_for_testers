@@ -62,7 +62,7 @@ public class GroupData {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { //Ускорение проверки - предварительная. // у равных объектов равные хешкоды. У разных есть возможность их совпадения.
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
