@@ -18,7 +18,7 @@ public class GroupModificationTests extends TestBase {
         }
     }
 
-    @Test(enabled = false)
+    @Test//(enabled = false)
     public void testGroupModification() {
         Groups before = app.group().all();
         GroupData modifiedGroup = before.iterator().next();
