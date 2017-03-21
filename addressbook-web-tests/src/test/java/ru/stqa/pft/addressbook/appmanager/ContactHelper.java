@@ -47,6 +47,7 @@ public class ContactHelper extends HeplerBase {
     public void delete(ContactData contact) {
         initContactModificationById(contact.getId());
         deleteContact();
+        contactCache = null;
         gotoHomePage();
     }
 
@@ -57,6 +58,7 @@ public class ContactHelper extends HeplerBase {
     public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact, true);
+        contactCache = null;
         submitContactCreation();
     }
 
@@ -65,6 +67,7 @@ public class ContactHelper extends HeplerBase {
         initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
+        contactCache = null;
         gotoHomePage();
     }
 
@@ -76,20 +79,23 @@ public class ContactHelper extends HeplerBase {
         return wd.findElements(name("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).size();
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name = 'entry']"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(tagName("td"));
-            //String lastName = element.findElements(By.name("td"));
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
 
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            //String id = element.findElement(By.tagName("tr")).getAttribute("value"); //поиск одного элемента внутри другого
-            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
     public void gotoHomePage() {
