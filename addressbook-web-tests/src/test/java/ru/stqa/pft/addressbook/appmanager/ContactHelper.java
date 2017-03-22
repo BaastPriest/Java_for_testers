@@ -101,13 +101,15 @@ public class ContactHelper extends HeplerBase {
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
             String address = cells.get(3).getText();
-            String[] phones = cells.get(5).getText().split("\n");
+            String[] allPhones = cells.get(5).getText().split("\n");
+            String[] allEmails = cells.get(5).getText().split("\n");
 
             contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
                 .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(5).getText()).withAddress(address));
         }
         return new Contacts(contactCache);
     }
+
     public Contacts allDetails () {
         if (contactCache != null) {
             return new Contacts(contactCache);
@@ -117,14 +119,14 @@ public class ContactHelper extends HeplerBase {
         List<WebElement> elements = wd.findElements(By.xpath("//img[@title='Details']/.."));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(tagName("td"));
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
             String address = cells.get(3).getText();
-            String[] phones = cells.get(5).getText().split("\n");
+            String[] allEmails = cells.get(4).getText().split("\n");
+            String[] allPhones = cells.get(5).getText().split("\n");
 
-            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                    .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(5).getText()).withAddress(address));
+            contactCache.add(new ContactData().withFirstname(firstName).withLastname(lastName)
+                    .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(4).getText()).withAddress(address));
         }
         return new Contacts(contactCache);
     }
