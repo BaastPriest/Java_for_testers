@@ -72,6 +72,12 @@ public class ContactHelper extends HeplerBase {
         gotoHomePage();
     }
 
+    public void details(ContactData contact) {
+        gotoHomePage();
+        wd.findElement(By.xpath("//img[@title='Details']/..")).click();
+        gotoHomePage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
@@ -119,6 +125,17 @@ public class ContactHelper extends HeplerBase {
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
                 withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address);
+    }
+    public ContactData infoFromHomeTableForm (ContactData contact) {
+        details(contact);
+        String firstname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[3]")).getText();
+        String lastname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[2]")).getText();
+        String mobile = wd.findElement(By.xpath("//tr[@name = 'entry']//td[6]")).getText();
+        String address = wd.findElement(By.xpath("//tr[@name = 'entry']//td[4]")).getText();
+       String Email = wd.findElement(By.xpath("//tr[@name = 'entry']//td[5]")).getText();
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
+                withMobilePhone(mobile).withAddress(address).withEmail(Email);
     }
 
     private void initContactModificationById(int id) { //выбираю кнопку редактирования(через нее удаление), что бы избежать подтверждающего удаление диалоговое окно
