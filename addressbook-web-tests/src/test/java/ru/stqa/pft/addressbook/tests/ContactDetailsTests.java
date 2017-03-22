@@ -29,7 +29,4 @@ public class ContactDetailsTests extends TestBase {
     public void testContactDetails(){
         app.goTo().homePage();
     }
-
-
-
 }
