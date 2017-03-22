@@ -26,7 +26,7 @@ public class ContactHelper extends HeplerBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(name("firstname"), contactData.getFirstname());
         type(name("lastname"), contactData.getLastname());
-        type(name("mobile"), contactData.getMobile());
+        type(name("mobile"), contactData.getMobilePhone());
         type(name("email"), contactData.getEmail());
 
         if (creation) {
@@ -113,8 +113,8 @@ public class ContactHelper extends HeplerBase {
         String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
         String home = wd.findElement(By.name("home")).getAttribute("value");
-        String mobile = wd.findElement(By.name("firstname")).getAttribute("value");
-        String work = wd.findElement(By.name("firstname")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
                 withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
