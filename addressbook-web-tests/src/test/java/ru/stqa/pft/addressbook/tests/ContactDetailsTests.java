@@ -13,10 +13,6 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -35,12 +31,12 @@ public class ContactDetailsTests extends TestBase {
 
     @Test
     public void testContactDetails() {
-        ContactData contactDetails = app.contact().all().iterator().next();
+        ContactData contactDetails = app.contact().allDetails().iterator().next();
         ContactData infoFromHomeTableForm = app.contact().infoFromHomeTableForm(contactDetails);
-        assertThat(contactDetails.getFirstname(), equalTo(infoFromHomeTableForm));
-        assertThat(contactDetails.getLastname(), equalTo(infoFromHomeTableForm));
-        assertThat(contactDetails.getAddress(), equalTo(infoFromHomeTableForm));
-        assertThat(contactDetails.getAllPhones(), equalTo(infoFromHomeTableForm));
-        assertThat(contactDetails.getAllEmails(), equalTo(infoFromHomeTableForm));
+        assertThat(contactDetails.getFirstname(), equalTo(infoFromHomeTableForm.getFirstname()));
+        assertThat(contactDetails.getLastname(), equalTo(infoFromHomeTableForm.getLastname()));
+        assertThat(contactDetails.getAddress(), equalTo(infoFromHomeTableForm.getAddress()));
+        assertThat(contactDetails.getAllPhones(), equalTo(infoFromHomeTableForm.getAllPhones()));
+        assertThat(contactDetails.getAllEmails(), equalTo(infoFromHomeTableForm.getAllEmails()));
     }
 }
