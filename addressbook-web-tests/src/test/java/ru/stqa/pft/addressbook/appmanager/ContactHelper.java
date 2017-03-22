@@ -96,7 +96,7 @@ public class ContactHelper extends HeplerBase {
             String firstName = cells.get(2).getText();
             String[] phones = cells.get(5).getText().split("\n");
             contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                .withAllPhones(cells.get(5).getText()));
+                .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(5).getText()));
         }
         return new Contacts(contactCache);
     }
