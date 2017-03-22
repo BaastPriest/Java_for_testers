@@ -101,36 +101,12 @@ public class ContactHelper extends HeplerBase {
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
             String address = cells.get(3).getText();
-            String[] allPhones = cells.get(5).getText().split("\n");
-            String[] allEmails = cells.get(5).getText().split("\n");
 
             contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(5).getText()).withAddress(address));
+                .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(4).getText()).withAddress(address));
         }
         return new Contacts(contactCache);
     }
-
-    public Contacts allDetails () {
-        if (contactCache != null) {
-            return new Contacts(contactCache);
-        }
-        contactCache = new Contacts();
-        Set<ContactData> contacts = new HashSet<ContactData>();
-        List<WebElement> elements = wd.findElements(By.xpath("//img[@title='Details']/.."));
-        for (WebElement element : elements) {
-            List<WebElement> cells = element.findElements(tagName("td"));
-            String lastName = cells.get(1).getText();
-            String firstName = cells.get(2).getText();
-            String address = cells.get(3).getText();
-            String[] allEmails = cells.get(4).getText().split("\n");
-            String[] allPhones = cells.get(5).getText().split("\n");
-
-            contactCache.add(new ContactData().withFirstname(firstName).withLastname(lastName)
-                    .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(4).getText()).withAddress(address));
-        }
-        return new Contacts(contactCache);
-    }
-
 
     public void gotoHomePage() {
         if (isElementPresent(By.id("maintable"))) {
@@ -160,7 +136,7 @@ public class ContactHelper extends HeplerBase {
        String Email = wd.findElement(By.xpath("//tr[@name = 'entry']//td[5]")).getText();
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
-                withMobilePhone(mobile).withAddress(address).withEmail(Email);
+                withAllPhones(mobile).withAddress(address).withAllEmails(Email);
     }
 
     private void initContactModificationById(int id) { //выбираю кнопку редактирования(через нее удаление), что бы избежать подтверждающего удаление диалоговое окно

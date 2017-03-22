@@ -31,7 +31,7 @@ public class ContactDetailsTests extends TestBase {
 
     @Test
     public void testContactDetails() {
-        ContactData contactDetails = app.contact().allDetails().iterator().next();
+        ContactData contactDetails = app.contact().all().iterator().next();
         ContactData infoFromHomeTableForm = app.contact().infoFromHomeTableForm(contactDetails);
         assertThat(contactDetails.getFirstname(), equalTo(infoFromHomeTableForm.getFirstname()));
         assertThat(contactDetails.getLastname(), equalTo(infoFromHomeTableForm.getLastname()));
