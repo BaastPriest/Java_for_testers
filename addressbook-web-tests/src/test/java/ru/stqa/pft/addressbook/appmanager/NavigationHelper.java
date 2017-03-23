@@ -25,4 +25,5 @@ public class NavigationHelper extends HeplerBase {
         }
         click(By.linkText("home"));
     }
+
 }
