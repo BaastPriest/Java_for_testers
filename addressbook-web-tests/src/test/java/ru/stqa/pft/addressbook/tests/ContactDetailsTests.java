@@ -31,12 +31,18 @@ public class ContactDetailsTests extends TestBase {
 
     @Test
     public void testContactDetails() {
-        ContactData contactDetails = app.contact().all().iterator().next();
-        ContactData infoFromHomeTableForm = app.contact().infoFromHomeTableForm(contactDetails);
-        assertThat(contactDetails.getFirstname(), equalTo(infoFromHomeTableForm.getFirstname()));
-        assertThat(contactDetails.getLastname(), equalTo(infoFromHomeTableForm.getLastname()));
-        assertThat(contactDetails.getAddress(), equalTo(infoFromHomeTableForm.getAddress()));
-        assertThat(contactDetails.getAllPhones(), equalTo(infoFromHomeTableForm.getAllPhones()));
-        assertThat(contactDetails.getAllEmails(), equalTo(infoFromHomeTableForm.getAllEmails()));
+        ContactData contactDetails = app.contact().allDetails().iterator().next();
+        ContactData infoFromEditForm = app.contact().infoFromEditForm(contactDetails);
+        assertThat(contactDetails.getFirstname(), equalTo(infoFromEditForm.getFirstname()));
+        assertThat(contactDetails.getLastname(), equalTo(infoFromEditForm.getLastname()));
+        assertThat(contactDetails.getAddress(), equalTo(infoFromEditForm.getAddress()));
+        assertThat(contactDetails.getMobilePhone(), equalTo(infoFromEditForm.getMobilePhone()));
+        assertThat(contactDetails.getWorkPhone(), equalTo(infoFromEditForm.getWorkPhone()));
+        assertThat(contactDetails.getHomePhone(), equalTo(infoFromEditForm.getHomePhone()));
+
+        assertThat(contactDetails.getEmail(), equalTo(infoFromEditForm.getEmail()));
+        assertThat(contactDetails.getEmail2(), equalTo(infoFromEditForm.getEmail2()));
+        assertThat(contactDetails.getEmail3(), equalTo(infoFromEditForm.getEmail3()));
+
     }
 }

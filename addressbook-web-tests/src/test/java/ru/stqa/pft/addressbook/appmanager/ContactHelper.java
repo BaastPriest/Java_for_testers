@@ -108,6 +108,29 @@ public class ContactHelper extends HeplerBase {
         return new Contacts(contactCache);
     }
 
+    public Contacts allDetails () {
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts ();
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.id("content"));
+        for (WebElement element : elements) {
+            List<WebElement> cells = element.findElements(tagName("br"));
+            String address = cells.get(1).getText();
+            String homePhone = cells.get(2).getText();
+            String mobilePhone = cells.get(3).getText();
+            String workPhone = cells.get(4).getText();
+            String email = cells.get(5).getText();
+            String email2 = cells.get(6).getText();
+            String email3 = cells.get(7).getText();
+            contactCache.add(new ContactData().withAddress(address)
+                    .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
+                    .withEmail(email).withEmail2(email2).withEmail3(email3));
+        }
+        return new Contacts(contactCache);
+    }
+
     public void gotoHomePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
