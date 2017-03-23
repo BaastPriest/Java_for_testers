@@ -28,9 +28,12 @@ public class ContactHelper extends HeplerBase {
         type(name("lastname"), contactData.getLastname());
         type(name("mobile"), contactData.getMobilePhone());
         type(name("email"), contactData.getEmail());
+        attach(name("photo"), contactData.getPhoto());
 
         if (creation) {
-            new org.openqa.selenium.support.ui.Select(wd.findElement(name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroup() != null) {
+                new org.openqa.selenium.support.ui.Select(wd.findElement(name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementPresent(name("new_group")));
         }
@@ -195,7 +198,8 @@ public class ContactHelper extends HeplerBase {
         //wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();// поиск по идентификатору в нужной ячейке
          }
 
-    private void initContactModificationWithoutId() {
+    public void initContactModificationWithoutId() {
+        gotoHomePage();
         wd.findElement(By.xpath("//td[@class='center']//img[@src='icons/pencil.png']//..")).click();
     }
 }
