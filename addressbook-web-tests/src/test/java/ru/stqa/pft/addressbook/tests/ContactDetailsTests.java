@@ -10,6 +10,7 @@ package ru.stqa.pft.addressbook.tests;
  Остальные поля оставьте пустыми.
  И не включайте этот контакт ни в какие группы.*/
 
+import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -24,8 +25,9 @@ public class ContactDetailsTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().homePage();
-        if (app.contact().all().size() == 0) {
+        //app.goTo().homePage();
+        app.goTo().goToDetailsPage();
+        if (app.contact().allDetails().size() == 0) {
             app.contact().create(new ContactData().withFirstname("myTestName").withLastname("myTestlastname")
                     .withEmail("alena@yandex.com").withEmail2("ASFDSJDJN@gdfg.dg").withEmail3("12312@sdf.ru")
                     .withHomePhone("849580324").withWorkPhone("8800456512").withMobilePhone("88007006050")
@@ -37,6 +39,11 @@ public class ContactDetailsTests extends TestBase {
     public void testContactDetails() {
         ContactData  contactDetails = app.contact().allDetails().iterator().next();
         ContactData infoFromEditFormWithoutId = app.contact().infoFromEditFormWithoutId(contactDetails);
+
+
+        String names = contactDetails.getAllNames();
+        String merges = mergeNames(infoFromEditFormWithoutId);
+
         assertThat(contactDetails.getAllNames(), equalTo(mergeNames(infoFromEditFormWithoutId)));
         assertThat(contactDetails.getAddress(), equalTo(infoFromEditFormWithoutId.getAddress()));
         assertThat(contactDetails.getAllPhones(), equalTo(mergePhones(infoFromEditFormWithoutId)));

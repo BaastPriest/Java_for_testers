@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import ru.stqa.pft.addressbook.model.ContactData;
 
 public class NavigationHelper extends HeplerBase {
 
@@ -24,6 +25,12 @@ public class NavigationHelper extends HeplerBase {
             return;
         }
         click(By.linkText("home"));
+    }
+
+
+    public void goToDetailsPage() {
+        homePage();
+        wd.findElement(By.xpath("//img[@title='Details']/..")).click();
     }
 
 }

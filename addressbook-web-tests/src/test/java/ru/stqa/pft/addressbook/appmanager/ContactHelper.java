@@ -75,10 +75,10 @@ public class ContactHelper extends HeplerBase {
         gotoHomePage();
     }
 
-    public void details(ContactData contact) {
+    /*public void details(ContactData contact) {
         gotoHomePage();
         wd.findElement(By.xpath("//img[@title='Details']/..")).click();
-    }
+    }*/
 
     public boolean isThereAContact() {
         return isElementPresent(xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
@@ -111,24 +111,14 @@ public class ContactHelper extends HeplerBase {
         return new Contacts(contactCache);
     }
 
-    public Contacts allDetails () {
+    public Contacts allDetails () { //ВОТ ТУТ НАДО ДОДЕЛАТЬ (от)
         if (contactCache != null) {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts ();
-        Set<ContactData> contacts = new HashSet<ContactData>();
-        List<WebElement> elements = wd.findElements(By.id("content"));
-        for (WebElement element : elements) {
-            List<WebElement> cells = element.findElements(tagName("br"));
-            String address = cells.get(1).getText();
-            String allPhones = cells.get(5).getText();
-            String allEmails = cells.get(5).getText();
-            String lastName = cells.get(1).getText();
-            String firstName = cells.get(2).getText();
-            contactCache.add(new ContactData().withAddress(address).withFirstname(firstName).withLastname(lastName)
-                    .withAllPhones(allPhones).withAllEmails(allEmails));
-        }
-        return new Contacts(contactCache);
+        WebElement element = wd.findElement(By.id("content"));
+        String test = element.getText();
+        return new Contacts(contactCache); //ВОТ ТУТ НАДО ДОДЕЛАТЬ (до)
     }
 
     public void gotoHomePage() {
@@ -174,7 +164,7 @@ public class ContactHelper extends HeplerBase {
     }
 
     public ContactData infoFromHomeTableForm (ContactData contact) {
-        details(contact);
+        //details(contact);
         String firstname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[3]")).getText();
         String lastname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[2]")).getText();
         String mobile = wd.findElement(By.xpath("//tr[@name = 'entry']//td[6]")).getText();
