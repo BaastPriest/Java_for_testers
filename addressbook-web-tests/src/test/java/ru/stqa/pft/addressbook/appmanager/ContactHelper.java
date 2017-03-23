@@ -75,7 +75,6 @@ public class ContactHelper extends HeplerBase {
     public void details(ContactData contact) {
         gotoHomePage();
         wd.findElement(By.xpath("//img[@title='Details']/..")).click();
-        gotoHomePage();
     }
 
     public boolean isThereAContact() {
@@ -101,9 +100,10 @@ public class ContactHelper extends HeplerBase {
             String lastName = cells.get(1).getText();
             String firstName = cells.get(2).getText();
             String address = cells.get(3).getText();
-
+            String allPhones = cells.get(5).getText();
+            String allEmails = cells.get(5).getText();
             contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                .withAllPhones(cells.get(5).getText()).withAllEmails(cells.get(4).getText()).withAddress(address));
+                .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
         }
         return new Contacts(contactCache);
     }
@@ -118,15 +118,12 @@ public class ContactHelper extends HeplerBase {
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(tagName("br"));
             String address = cells.get(1).getText();
-            String homePhone = cells.get(2).getText();
-            String mobilePhone = cells.get(3).getText();
-            String workPhone = cells.get(4).getText();
-            String email = cells.get(5).getText();
-            String email2 = cells.get(6).getText();
-            String email3 = cells.get(7).getText();
-            contactCache.add(new ContactData().withAddress(address)
-                    .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
-                    .withEmail(email).withEmail2(email2).withEmail3(email3));
+            String allPhones = cells.get(5).getText();
+            String allEmails = cells.get(5).getText();
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+            contactCache.add(new ContactData().withAddress(address).withFirstname(firstName).withLastname(lastName)
+                    .withAllPhones(allPhones).withAllEmails(allEmails));
         }
         return new Contacts(contactCache);
     }
@@ -147,10 +144,32 @@ public class ContactHelper extends HeplerBase {
         String work = wd.findElement(By.name("work")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getText();
         String email = wd.findElement(By.name("email")).getText();
+        String email2 = wd.findElement(By.name("email2")).getText();
+        String email3 = wd.findElement(By.name("email3")).getText();
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
-                withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address).withEmail(email);
+                withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address)
+                .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
+
+
+    public ContactData infoFromEditFormWithoutId(ContactData contact) {
+        initContactModificationWithoutId();
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
+        String email = wd.findElement(By.name("email")).getText();
+        String email2 = wd.findElement(By.name("email2")).getText();
+        String email3 = wd.findElement(By.name("email3")).getText();
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
+                withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address)
+                .withEmail(email).withEmail2(email2).withEmail3(email3);
+    }
+
     public ContactData infoFromHomeTableForm (ContactData contact) {
         details(contact);
         String firstname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[3]")).getText();
@@ -175,4 +194,8 @@ public class ContactHelper extends HeplerBase {
         //wd.findElement(By.xpath(String.format("//tr[.//input[@value=%s']]/td[8]/a", id))).click(); //подзапросы - начинаются с точки. поиск по ограничениям
         //wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();// поиск по идентификатору в нужной ячейке
          }
+
+    private void initContactModificationWithoutId() {
+        wd.findElement(By.xpath("//td[@class='center']//img[@src='icons/pencil.png']//..")).click();
+    }
 }
