@@ -34,18 +34,14 @@ public class ContactDetailsTests extends TestBase {
     }
 
         private String  mergeDetails(ContactData contact) {
-            return Arrays.asList(contact.getFirstname(), contact.getLastname(), contact.getAddress(),
-                    contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(),
-                    contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+            return Arrays.asList(contact.getFirstname() + " " + contact.getLastname(), contact.getAddress(),
+                   "\nH: " + contact.getHomePhone(),"M: " + contact.getMobilePhone(),"W: " + contact.getWorkPhone(),
+                   "\n" + contact.getEmail(), contact.getEmail2(), contact.getEmail3())
                     .stream().filter((s)->!(s == null || s.equals("")))
-                    .map(ContactDetailsTests::cleaned)
-                    .collect(Collectors.joining("\n\n"));
+                    .collect(Collectors.joining("\n"));
     }
 
-    private static String cleaned(String phone) {
-        return phone.replaceAll("[M: H: W:]", ""); //регулярные выражения (пробельный символ)
-    }
-} //.replaceAll("\\s", "")
+}
 
 
 
