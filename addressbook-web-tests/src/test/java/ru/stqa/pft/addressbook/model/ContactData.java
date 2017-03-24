@@ -16,7 +16,16 @@ public class ContactData {
     private String Address;
     private String allPhones;
     private String allEmails;
-    private String allNames;
+    private String allDetails;
+
+
+    public String getAllDetails() {
+        return allDetails;
+    }
+    public ContactData withAllDetails(String allDetails) {
+        this.allDetails = allDetails;
+        return this;
+    }
 
     public File getPhoto() {
         return photo;
@@ -28,14 +37,6 @@ public class ContactData {
 
     private File photo;
 
-
-    public String getAllNames() {
-        return allNames;
-    }
-    public ContactData withAllNames(String allNames) {
-        this.allNames = allNames;
-        return this;
-    }
 
     public String getAllPhones() {
         return allPhones;

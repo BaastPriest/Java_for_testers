@@ -1,14 +1,4 @@
 package ru.stqa.pft.addressbook.tests;
-/*Тест должен проверять только один какой-нибудь контакт,
-сравнивать информацию о контакте,
-которая представлена на тестируемой странице,
-с информацией, представленной в форме редактирования контакта.
-метод обратных проверок
-Контакт, у которого заполнена только те поля,
-которые отображаются на главной странице
- -- имя, фамилия, адреса и телефоны.
- Остальные поля оставьте пустыми.
- И не включайте этот контакт ни в какие группы.*/
 
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
@@ -40,30 +30,22 @@ public class ContactDetailsTests extends TestBase {
         ContactData  contactDetails = app.contact().allDetails().iterator().next();
         ContactData infoFromEditFormWithoutId = app.contact().infoFromEditFormWithoutId(contactDetails);
 
-
-        String names = contactDetails.getAllNames();
-        String merges = mergeNames(infoFromEditFormWithoutId);
-
-        assertThat(contactDetails.getAllNames(), equalTo(mergeNames(infoFromEditFormWithoutId)));
-        assertThat(contactDetails.getAddress(), equalTo(infoFromEditFormWithoutId.getAddress()));
-        assertThat(contactDetails.getAllPhones(), equalTo(mergePhones(infoFromEditFormWithoutId)));
-        assertThat(contactDetails.getAllEmails(), equalTo(mergeEmails(infoFromEditFormWithoutId)));
-    }
-    private String mergeNames(ContactData contact) {
-        return Arrays.asList(contact.getFirstname(), contact.getLastname())
-                .stream().filter((s)->!(s == null || s.equals("")))
-                .collect(Collectors.joining(""));
+        assertThat(contactDetails.getAllDetails(), equalTo(mergeDetails(infoFromEditFormWithoutId)));
     }
 
-    private String mergePhones(ContactData contact) {
-       return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone() )
-               .stream().filter((s) -> !(s == null || s.equals("")))
-               .collect(Collectors.joining("\n"));
+        private String  mergeDetails(ContactData contact) {
+            return Arrays.asList(contact.getFirstname(), contact.getLastname(), contact.getAddress(),
+                    contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(),
+                    contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+                    .stream().filter((s)->!(s == null || s.equals("")))
+                    .map(ContactDetailsTests::cleaned)
+                    .collect(Collectors.joining("\n\n"));
     }
 
-    private String mergeEmails(ContactData contact) {
-        return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
-                .stream().filter((s)->!(s == null || s.equals("")))
-                .collect(Collectors.joining("\n"));
+    private static String cleaned(String phone) {
+        return phone.replaceAll("[M: H: W:]", ""); //регулярные выражения (пробельный символ)
     }
-}
+} //.replaceAll("\\s", "")
+
+
+
