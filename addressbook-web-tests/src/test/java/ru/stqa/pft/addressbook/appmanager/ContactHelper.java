@@ -155,9 +155,16 @@ public class ContactHelper extends HeplerBase {
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getText();
-        String email = wd.findElement(By.name("email")).getText();
-        String email2 = wd.findElement(By.name("email2")).getText();
-        String email3 = wd.findElement(By.name("email3")).getText();
+
+        WebElement content =  wd.findElement(By.id("content"));
+        content.findElements(By.xpath(".//a"));
+
+        List<WebElement> emails = wd.findElements(By.xpath("//div[@id='content']/a"));
+        String email =  emails.get(0).getText();
+        String email2 = emails.get(1).getText();
+        String email3 = emails.get(2).getText();
+
+
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
                 withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address)

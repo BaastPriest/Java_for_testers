@@ -15,7 +15,6 @@ public class ContactDetailsTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        //app.goTo().homePage();
         app.goTo().goToDetailsPage();
         if (app.contact().allDetails().size() == 0) {
             app.contact().create(new ContactData().withFirstname("myTestName").withLastname("myTestlastname")
@@ -32,7 +31,6 @@ public class ContactDetailsTests extends TestBase {
 
         assertThat(contactDetails.getAllDetails(), equalTo(mergeDetails(infoFromEditFormWithoutId)));
     }
-
         private String  mergeDetails(ContactData contact) {
             return Arrays.asList(contact.getFirstname() + " " + contact.getLastname(), contact.getAddress(),
                    "\nH: " + contact.getHomePhone(),"M: " + contact.getMobilePhone(),"W: " + contact.getWorkPhone(),
