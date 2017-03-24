@@ -111,14 +111,15 @@ public class ContactHelper extends HeplerBase {
         return new Contacts(contactCache);
     }
 
-    public Contacts allDetails () { //ВОТ ТУТ НАДО ДОДЕЛАТЬ (от)
+    public Contacts allDetails () {
         if (contactCache != null) {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts ();
         WebElement element = wd.findElement(By.id("content"));
-        String test = element.getText();
-        return new Contacts(contactCache); //ВОТ ТУТ НАДО ДОДЕЛАТЬ (до)
+        String allDetails = element.getText();
+        contactCache.add(new ContactData().withAllDetails(allDetails));
+        return new Contacts(contactCache);
     }
 
     public void gotoHomePage() {
