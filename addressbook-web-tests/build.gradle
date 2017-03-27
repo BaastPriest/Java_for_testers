@@ -17,10 +17,25 @@ dependencies {
     useTesNG {
         suites 'src/test/resources/testing-groups.xml'
         }
+        if (project.hasProperty('browser')){
+            systemProperty 'browser', "${browser}"
+        }
+
+        if (project.hasProperty('target')){
+            systemProperty 'target', "${target}"
+        }
     }
 
     task testContacts(type: Test) {
     useTesNG {
         suites 'src/test/resources/testing-contacts.xml'
         }
+        if (project.hasProperty('browser')){
+            systemProperty 'browser', "${browser}"
+        }
+
+        if (project.hasProperty('target')){
+          systemProperty 'target', "${target}"
+        }
     }
+//обратить внимание на двойные "" у "${browser}"
