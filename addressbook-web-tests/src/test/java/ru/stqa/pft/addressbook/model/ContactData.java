@@ -1,29 +1,77 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+
+
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
+
     @Expose
+    @Column(name = "firstname")
     private  String firstname;
+
     @Expose
+    @Column(name = "lastname")
     private  String lastname;
+
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private  String email;
+    @Type(type = "text")
     private  String email2;
+    @Type(type = "text")
     private  String email3;
+
+    @Transient
     private String group;
+
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
+
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
+
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
+
+    @Column(name = "address")
+    @Type(type = "text")
     private String Address;
+
+    @Transient
     private String allPhones;
+    @Transient
     private String allEmails;
+    @Transient
     private String allDetails;
 
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
+
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 
     public String getAllDetails() {
         return allDetails;
@@ -34,14 +82,14 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
-    private File photo;
+
 
 
     public String getAllPhones() {
@@ -150,15 +198,6 @@ public class ContactData {
         return email3;
     }
 
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id='" + id + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
