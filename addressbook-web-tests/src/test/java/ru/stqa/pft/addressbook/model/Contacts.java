@@ -38,4 +38,8 @@ public class Contacts extends ForwardingSet<ContactData> {
         contacts.remove(contact);
         return contacts;
     }
+
+    public ContactData next() {
+        return delegate.iterator().next();
+    }
 }
