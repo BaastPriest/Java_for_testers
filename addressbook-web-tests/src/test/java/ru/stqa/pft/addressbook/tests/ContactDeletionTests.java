@@ -39,11 +39,11 @@ public class ContactDeletionTests extends TestBase {
     @Test(dataProvider = "validContactsFromJson")
     public void testContactDeletion() {
         app.goTo().homePage();
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
         assertEquals(app.contact().count(), before.size() - 1);
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
     /* Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
     wd.switchTo().alert().accept(); */
         assertThat(after, equalTo(before.without(deletedContact)));

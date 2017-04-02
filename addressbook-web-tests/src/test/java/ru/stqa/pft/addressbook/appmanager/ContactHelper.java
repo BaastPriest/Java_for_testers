@@ -28,7 +28,7 @@ public class ContactHelper extends HeplerBase {
         type(name("lastname"), contactData.getLastname());
         type(name("mobile"), contactData.getMobilePhone());
         type(name("email"), contactData.getEmail());
-        attach(name("photo"), contactData.getPhoto());
+       /* attach(name("photo"), contactData.getPhoto());*/
 
         if (creation) {
             if (contactData.getGroup() != null) {
@@ -69,6 +69,15 @@ public class ContactHelper extends HeplerBase {
     public void modify(ContactData contact) {
         gotoHomePage();
         initContactModificationById(contact.getId());
+        fillContactForm(contact, false);
+        submitContactModification();
+        contactCache = null;
+        gotoHomePage();
+    }
+
+    public void modifyWithoutId(ContactData contact) {
+        gotoHomePage();
+        initContactModificationWithoutId();
         fillContactForm(contact, false);
         submitContactModification();
         contactCache = null;

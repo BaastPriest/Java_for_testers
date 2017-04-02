@@ -51,19 +51,19 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        try ( Writer writer = new FileWriter(file)){
+        try ( Writer writer = new FileWriter(file)){ // try - автоматическое закрытие файлов
             writer.write(json);
         }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
         System.out.println(new File(".").getAbsolutePath()); //просмотреть текущую директорию(запуск тестов-директория модуля явл.раб., запуск прогр.-директория проекта явл.рабочей)
-        Writer writer = new FileWriter(file);
-        for (ContactData contact : contacts) {
-            writer.write(String.format("%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getMobilePhone(), contact.getEmail()));
-            //запись в файл
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact : contacts) {
+                writer.write(String.format("%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getMobilePhone(), contact.getEmail()));
+                //запись в файл
+            }
         }
-        writer.close(); //закрытие файла(все содержимоей файла записывается на диск и файл закрывается)
     }
 
     private List<ContactData> generateContacts(int count) {

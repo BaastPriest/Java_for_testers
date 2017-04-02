@@ -1,0 +1,27 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.testng:testng:6.10'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.1'
+    compile 'org.hamcrest:java-hamcrest:2.0.0.0'
+}
+
+    test {
+    useTestNG {
+        suites 'src/test/resources/testing.xml'
+        }
+        if (project.hasProperty('browser')){ //браузер
+            systemProperty 'browser', "${browser}"
+        }
+
+        if (project.hasProperty('target')){ //описание свойства окружения
+            systemProperty 'target', "${target}"
+        }
+        if (project.hasProperty('verifyUI')) {
+            systemProperty 'verifyUI', "${verifyUI}"
+        } // вкл или выкл проверок через пользовательский интерфейс
+    }

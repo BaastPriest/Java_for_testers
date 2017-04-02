@@ -18,10 +18,11 @@ public class GroupDeletionTests extends TestBase {
 
     @Test //(enabled = false)
     public void testGroupDeletion() {
+        app.goTo().groupPage();
         Groups before = app.db().groups();
         GroupData deletedGroup = before.iterator().next();
         app.group().delete(deletedGroup); //
-        assertThat(app.group().count(), equalTo(before.size() - 1)); //хеширование
+        assertThat(app.group().count(), equalTo(before.size() - 1));
         Groups after = app.db().groups();
         assertThat(after, equalTo(before.without(deletedGroup)));
     }
