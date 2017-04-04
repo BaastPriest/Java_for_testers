@@ -33,7 +33,7 @@ public class RegistrationTests extends TestBase{
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-        MailMessage mailMessage = mailMessages.stream().filter((m)-> m.equals(email)).findAny().get();
+        MailMessage mailMessage = mailMessages.stream().filter((m)-> m.to.equals(email)).findAny().get();
         VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
        return regex.getText(mailMessage.text); //возвращает текст соответствующий регулярному выражению
     }
