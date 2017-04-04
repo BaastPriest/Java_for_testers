@@ -20,7 +20,7 @@ public class ApplicationManager {
     private RegistrationHelper registrationHelper;
     private FtpHelper ftp ;
     private MailHelper mailHelper;
-
+    private AdministratorHelper administratorHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -58,6 +58,13 @@ public class ApplicationManager {
             ftp = new FtpHelper(this);
         }
        return ftp;
+    }
+
+    public AdministratorHelper admin() {
+        if(administratorHelper==null){
+            administratorHelper = new AdministratorHelper(this);
+        }
+        return administratorHelper;
     }
 
     public WebDriver getDriver() { //инициализация драйвера, только при его вызове
