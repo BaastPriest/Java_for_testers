@@ -20,7 +20,7 @@ public class ContactAddressTests extends TestBase {
     public void testContactAddress(){
         app.goTo().homePage();
         ContactData contact = app.db().contacts().iterator().next();
-        ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+        ContactData contactInfoFromEditForm = app.contact().infoFromEditFormWithoutId(contact);
 
         assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
     }
