@@ -9,10 +9,11 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.equalTo;
 
 
-public class ContactDelitionFromGroupTests extends TestBase {
+public class ContactAddToGroupTests extends TestBase {
+
     @BeforeMethod
     public void ensurePreconditions() {
 
@@ -44,16 +45,16 @@ public class ContactDelitionFromGroupTests extends TestBase {
         }
     }
 
+
     @Test
-    public void testIfContactCouldBeDeletedFromGroup() {
+    public void testIfContactCouldBeAddedToGroup() {
         Contacts contactsList = app.db().contacts();
         Groups groupsList = app.db().groups();
-
         ContactData selectedContact = contactsList.iterator().next();
         GroupData selectedGroup = groupsList.iterator().next();
         for (ContactData contact : contactsList) {
             for (GroupData group : groupsList) {
-                if (StringUtils.containsIgnoreCase(contact.getGroups().toString(), group.toString())) {
+                if (!StringUtils.containsIgnoreCase(contact.getGroups().toString(), group.toString())) {
                     selectedContact = contact;
                     selectedGroup = group;
                     break;
@@ -62,10 +63,9 @@ public class ContactDelitionFromGroupTests extends TestBase {
         }
 
         app.contact().gotoHomePage();
-        app.contact().deleteFromGroup(selectedContact, selectedGroup);
+        app.contact().addToGroup(selectedContact, selectedGroup);
 
-        assertThat(app.db().contactById(selectedContact.getId()).iterator().next().getGroups(), equalTo(selectedContact.getGroups().without(selectedGroup)));
+        assertThat(app.db().contactById(selectedContact.getId()).iterator().next().getGroups(), equalTo(selectedContact.getGroups().withAdded(selectedGroup)));
 
     }
-
 }

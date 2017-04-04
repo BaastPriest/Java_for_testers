@@ -1,11 +1,14 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import com.sun.jna.Structure;
+import org.apache.bcel.generic.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.HashSet;
 import java.util.List;
@@ -115,16 +118,16 @@ public class ContactHelper extends HeplerBase {
             String allPhones = cells.get(5).getText();
             String allEmails = cells.get(5).getText();
             contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
+                    .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
         }
         return new Contacts(contactCache);
     }
 
-    public Contacts allDetails () {
+    public Contacts allDetails() {
         if (contactCache != null) {
             return new Contacts(contactCache);
         }
-        contactCache = new Contacts ();
+        contactCache = new Contacts();
         WebElement element = wd.findElement(By.id("content"));
         String allDetails = element.getText();
         contactCache.add(new ContactData().withAllDetails(allDetails));
@@ -173,13 +176,13 @@ public class ContactHelper extends HeplerBase {
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
 
-    public ContactData infoFromHomeTableForm (ContactData contact) {
+    public ContactData infoFromHomeTableForm(ContactData contact) {
         //details(contact);
         String firstname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[3]")).getText();
         String lastname = wd.findElement(By.xpath("//tr[@name = 'entry']//td[2]")).getText();
         String mobile = wd.findElement(By.xpath("//tr[@name = 'entry']//td[6]")).getText();
         String address = wd.findElement(By.xpath("//tr[@name = 'entry']//td[4]")).getText();
-       String Email = wd.findElement(By.xpath("//tr[@name = 'entry']//td[5]")).getText();
+        String Email = wd.findElement(By.xpath("//tr[@name = 'entry']//td[5]")).getText();
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
                 withAllPhones(mobile).withAddress(address).withAllEmails(Email);
@@ -188,7 +191,7 @@ public class ContactHelper extends HeplerBase {
     private void initContactModificationById(int id) { //выбираю кнопку редактирования(через нее удаление), что бы избежать подтверждающего удаление диалоговое окно
         //1 путь. реализация метода последовательных приближений
         //wd.findElement(By.xpath("//tr[@name = 'entry']//input[id='" + id + "']")).click();
-        WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id))); //поиск чекбокса
+        WebElement checkbox = wd.findElement(cssSelector(String.format("input[value='%s']", id))); //поиск чекбокса
         WebElement row = checkbox.findElement(By.xpath("./../..")); //переход к родительскому элементу
         List<WebElement> cells = row.findElements(By.tagName("td")); //выбор ячейки с карандашиком
         cells.get(7).findElement(By.tagName("a")).click(); //клик на карандашик
@@ -196,10 +199,43 @@ public class ContactHelper extends HeplerBase {
         //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();//в xpath номера начинаются с 1, а не с 0
         //wd.findElement(By.xpath(String.format("//tr[.//input[@value=%s']]/td[8]/a", id))).click(); //подзапросы - начинаются с точки. поиск по ограничениям
         //wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();// поиск по идентификатору в нужной ячейке
-         }
+    }
 
     public void initContactModificationWithoutId() {
         gotoHomePage();
         wd.findElement(By.xpath("//td[@class='center']//img[@src='icons/pencil.png']//..")).click();
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectContactById(contact.getId());
+        SelectedGroupById(group.getId());
+        contactCache = null;
+        gotoHomePage();
+    }
+
+    public void filterContactsByGroupId(int id) {
+        wd.findElement(By.xpath("//select[@name = 'to_group']//option[id='" + id + "']")).click();
+        click(By.name("add"));
+    }
+
+    public void removeContactFromGroup() {
+        click(By.cssSelector("input[name='remove']"));
+    }
+
+    public void deleteFromGroup(ContactData contact, GroupData group) {
+        filterContactsByGroupId(group.getId());
+        selectContactById(contact.getId());
+        removeContactFromGroup();
+        contactCache = null;
+        gotoHomePage();
+    }
+
+    public void SelectedGroupById(int id) {
+        wd.findElement(By.xpath("//select[@name = 'to_group']//option[value='" + id + "']")).click();
+        click(By.name("add"));
+    }
+
+    public void selectContactById(int id) {
+        wd.findElement(By.xpath("//td[@class = 'center']//input[id='" + id + "']")).click();
     }
 }
