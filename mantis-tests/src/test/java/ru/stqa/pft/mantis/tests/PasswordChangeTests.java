@@ -24,17 +24,18 @@ public class PasswordChangeTests extends TestBase{
 
     @Test
     public void testUserPasswordChange() throws IOException, MessagingException, javax.mail.MessagingException {
-        app.admin().administratorLogin(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));
-        app.admin().selectUser();
-        User user = app.admin().getUser();
-        app.admin().resetPassword();
+        String login = app.getProperty("web.adminLogin");
+        String password = app.getProperty("web.adminPassword");
+        String newPassword = "root";
+        app.admin().administratorLogin(login, password);
+
+
+        app.admin().changePassword(password, newPassword);
+        app.admin().confirmChangingPassword();
+
 
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
-
-
-        long now = System.currentTimeMillis();
-        String newPassword = "new_password" + now;
-
+        
 
         String confirmationLink = findConfirmationLink(mailMessages, User.getEmail());
         app.registration().finish(confirmationLink, newPassword);

@@ -69,7 +69,8 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() { //инициализация драйвера, только при его вызове
-        if (wd == null) {
+        if (wd == null)
+        { System.setProperty("webdriver.chrome.driver", "C:\\Devel_Java\\Java_for_testers\\mantis-tests\\src\\test\\resources\\chromedriver.exe"); //!!!
             if (browser.equals(BrowserType.FIREFOX)) {
                 wd = new FirefoxDriver();
             } else if (browser.equals(BrowserType.CHROME)) {
